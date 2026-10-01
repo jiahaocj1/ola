@@ -1,4 +1,3 @@
-```
 -- This file was Deobfuscated & Cleaned using SigmaBot V4 | .gg/Zame2JAGDr
 
 local players = game:GetService("Players")
@@ -18,51 +17,10 @@ end
 
 local localPlayer = players.LocalPlayer
 
-local env = getgenv and getgenv() or _G
-
 local v1 = {
-MAIN_USERNAME = env.ABA_MAIN_USERNAME or "", SELECTED_QUEST_SLOT = 4, AUTO_REFRESH_QUESTS = true, GLITCH_QUEST_1 = 1, GLITCH_QUEST_2 = 2, REQUIRED_PLAYERS = 2, TP_DELAY = 3, PRIVATE_SERVER = env.ABA_PRIVATE_SERVER or "", PRIVATE_SERVER_DELAY = 3, M1_CLICK_DELAY = 0.2, M1_HOLD_DURATION = 0.05, ALT_TP_INTERVAL = 0.5, ALT_TP_OFFSET = Vector3.new(0, 0, -3), AUTO_SKILLS = false, SKILL_1 = true, SKILL_2 = true, SKILL_3 = true, SKILL_4 = true, SKILL_DELAY = 0.5, AUTO_M1 = true, ENGINE_ENABLED = env.ABA_AUTO_START == true, AUTO_HIDE_UI = true, TOGGLE_UI_KEY = "L", TOGGLE_ENGINE_KEY = "R",
-SCRIPT_URL = env.ABA_SCRIPT_URL or "", AUTO_REEXEC_TELEPORT = true, }
+MAIN_USERNAME = "", SELECTED_QUEST_SLOT = 4, AUTO_REFRESH_QUESTS = true, GLITCH_QUEST_1 = 1, GLITCH_QUEST_2 = 2, REQUIRED_PLAYERS = 2, TP_DELAY = 3, PRIVATE_SERVER = "", PRIVATE_SERVER_DELAY = 3, M1_CLICK_DELAY = 0.2, M1_HOLD_DURATION = 0.05, ALT_TP_INTERVAL = 0.5, ALT_TP_OFFSET = Vector3.new(0, 0, -3), AUTO_SKILLS = false, SKILL_1 = true, SKILL_2 = true, SKILL_3 = true, SKILL_4 = true, SKILL_DELAY = 0.5, AUTO_M1 = true, ENGINE_ENABLED = false, AUTO_HIDE_UI = true, TOGGLE_UI_KEY = "L", TOGGLE_ENGINE_KEY = "R", }
 
-local engineENABLED = v1.ENGINE_ENABLED
-local engineBooted = false
-
--- Queue this script before every teleport so the farm continues automatically.
-local function queueSelfOnTeleport()
-    if not v1.AUTO_REEXEC_TELEPORT or not engineENABLED then
-        return
-    end
-
-    local queueFn = queue_on_teleport
-        or (syn and syn.queue_on_teleport)
-        or (fluxus and fluxus.queue_on_teleport)
-
-    if type(queueFn) ~= "function" then
-        warn("⚠ queue_on_teleport is not supported by this executor; auto-resume after teleport cannot work.")
-        return
-    end
-
-    if not v1.SCRIPT_URL or v1.SCRIPT_URL == "" then
-        warn("⚠ Set ABA_SCRIPT_URL / SCRIPT_URL to the RAW URL of this fixed script for infinite teleport looping.")
-        return
-    end
-
-    env.ABA_AUTO_START = true
-    env.ABA_MAIN_USERNAME = v1.MAIN_USERNAME
-    env.ABA_PRIVATE_SERVER = v1.PRIVATE_SERVER
-    env.ABA_SCRIPT_URL = v1.SCRIPT_URL
-
-    local loader = string.format([[
-repeat task.wait() until game:IsLoaded()
-getgenv().ABA_AUTO_START = true
-getgenv().ABA_MAIN_USERNAME = %q
-getgenv().ABA_PRIVATE_SERVER = %q
-getgenv().ABA_SCRIPT_URL = %q
-loadstring(game:HttpGet(getgenv().ABA_SCRIPT_URL))()
-]], v1.MAIN_USERNAME, v1.PRIVATE_SERVER, v1.SCRIPT_URL)
-
-    pcall(queueFn, loader)
-end
+local engineENABLED = false
 
 local function f1(p1)
     local total = 0
@@ -126,3 +84,551 @@ if string.lower(localPlayer.Name) == string.lower(v1.MAIN_USERNAME) then
                         if not engineENABLED then
                             return
                         end
+
+                    waitForChild:FireServer("Take", v9)
+                    task.wait(0.05)
+                    waitForChild:FireServer("Take", v10)
+                    task.wait(0.05)
+                end
+
+            task.wait(0.1)
+        end
+
+    if not engineENABLED then
+        return
+    else
+        waitForChild:FireServer("Take", v8)
+        task.wait(0.4)
+        waitForChild:FireServer("Close")
+        local v11 = ""
+        local count2 = 0
+
+        while true do
+            count2 = 1 + count2
+
+            if not (count2 <= 25) then
+                break
+            end
+
+        if not engineENABLED then
+            return
+        end
+
+    if v6.Value and v6.Value ~= "" then
+        v11 = tostring(v6.Value)
+        break
+    end
+
+task.wait(0.1)
+end
+
+if v11 ~= "" then
+    local v12, v13 = pcall(function() return httpService:JSONDecode(v11) end)
+
+    if v12 and type(v13) == "table" then
+        local v14 = v13[v8]
+
+        if v14 and v14.Requirements then
+            character = v14.Requirements.Character or ""
+
+            if v14.Requirements.Combo then
+                v3 = "Combo"
+                v4 = tonumber(v14.Requirements.Combo) or 0
+            elseif v14.Requirements.Damage then
+                v3 = "Damage"
+                v4 = tonumber(v14.Requirements.Damage) or 0
+            elseif v14.Requirements.Points then
+                v3 = "Points"
+                v4 = tonumber(v14.Requirements.Points) or 0
+            elseif v14.Requirements.Kills then
+                v3 = "Kills"
+                v4 = tonumber(v14.Requirements.Kills) or 0
+            end
+
+        if v14.Description
+        and (v14.Description:lower():find("mode")
+        or v14.Description:lower():find("awaken")) then
+        v3 = "ModeKills"
+    end
+
+v7 = true
+end
+end
+end
+
+if not v7 then
+    print("⚠️ Quest data sync delayed, retrying... (Attempt " .. count .. "/5)")
+    task.wait(0.8)
+end
+end
+end
+
+if not v7 or not engineENABLED then
+    warn("❌ Failed to load quest data after multiple attempts.")
+    return
+end
+
+print(string.format(
+"🎯 Target Loaded | Mode: %s | Target: %d | Character: '%s'", v3, v4, character
+))
+
+if character and character ~= "" and engineENABLED then
+    pcall(function()
+        local waitForChild4 = localPlayer:WaitForChild("Backpack", 10)
+        local waitForChild5 = waitForChild4 and waitForChild4:WaitForChild("Input", 10)
+
+        if waitForChild5 then
+            waitForChild5:FireServer("CharacterButton", character)
+            task.wait(0.05)
+            waitForChild5:FireServer("ClickPlay")
+        end
+end)
+end
+
+if v7 and #players:GetPlayers() >= v1.REQUIRED_PLAYERS and engineENABLED then
+    task.spawn(function()
+        local waitForChild6 = localPlayer:WaitForChild("leaderstats", 10)
+
+        local kills = waitForChild6 and waitForChild6:FindFirstChild("Kills")
+        and tonumber(waitForChild6.Kills.Value)
+        or 0
+
+        local damage = waitForChild6 and waitForChild6:FindFirstChild("Damage")
+        and tonumber(waitForChild6.Damage.Value)
+        or 0
+
+        local points = waitForChild6 and waitForChild6:FindFirstChild("Points")
+        and tonumber(waitForChild6.Points.Value)
+        or 0
+
+        local v15 = kills + ((v3 == "Kills" or v3 == "ModeKills") and v4 or 0)
+        local v16 = damage + (v3 == "Damage" and v4 or 0)
+        local v17 = points + (v3 == "Points" and v4 or 0)
+
+        localPlayer.CharacterAdded:Connect(function()
+            if not v2 and waitForChild6 and engineENABLED then
+                task.wait(0.5)
+
+                kills = waitForChild6:FindFirstChild("Kills")
+                and tonumber(waitForChild6.Kills.Value)
+                or 0
+
+                v15 = kills + ((v3 == "Kills" or v3 == "ModeKills") and v4 or 0)
+            end
+    end)
+
+while engineENABLED and not v2 do
+    local v18 = false
+    local leaderstats = localPlayer:FindFirstChild("leaderstats")
+
+    if leaderstats and v4 > 0 then
+        if v3 == "Kills" or v3 == "ModeKills" then
+            local kills2 = leaderstats:FindFirstChild("Kills")
+            and tonumber(leaderstats.Kills.Value)
+            or 0
+
+            v18 = kills2 >= v15 and kills2 > kills
+        elseif v3 == "Damage" then
+            local damage2 = leaderstats:FindFirstChild("Damage")
+            and tonumber(leaderstats.Damage.Value)
+            or 0
+
+            v18 = damage2 >= v16 and damage2 > damage
+        elseif v3 == "Points" then
+            local points2 = leaderstats:FindFirstChild("Points")
+            and tonumber(leaderstats.Points.Value)
+            or 0
+
+            v18 = points2 >= v17 and points2 > points
+        end
+end
+
+if v18 and not v2 then
+    v2 = true
+    print("✅ Quest goal achieved via Leaderstats!")
+    f1(math.max(0, 1 + v1.TP_DELAY))
+
+    if engineENABLED then
+        local waitForChild7 = replicatedStorage:WaitForChild("Train", 10)
+
+        if waitForChild7 then
+            waitForChild7:FireServer()
+        end
+end
+
+break
+end
+
+task.wait(0.2)
+end
+end)
+
+task.spawn(function()
+    print("⚔ Combat Loop ACTIVE for mode: " .. v3)
+
+    local v19 = {
+    Enum.KeyCode.One, Enum.KeyCode.Two, Enum.KeyCode.Three, Enum.KeyCode.Four, }
+
+    local v20 = {
+    function() return v1.SKILL_1 end, function() return v1.SKILL_2 end, function() return v1.SKILL_3 end, function() return v1.SKILL_4 end, }
+
+    local v21 = 1
+
+    while engineENABLED and not v2 do
+        if v3 == "ModeKills" then
+            virtualInputManager:SendKeyEvent(true, Enum.KeyCode.G, false, game)
+            task.wait(0.02)
+            virtualInputManager:SendKeyEvent(false, Enum.KeyCode.G, false, game)
+        end
+
+    if v3 == "Combo" then
+        local v22 = localPlayer:FindFirstChild("Stats")
+        local combo = v22 and v22:FindFirstChild("Combo")
+        local v23 = combo and tonumber(combo.Value) or 0
+
+        if v23 >= v4 then
+            print("🛑 Combo target reached (" .. v23 .. "). Holding for drop...")
+            f1(6)
+
+            if not v2 and engineENABLED then
+                v2 = true
+                f1(math.max(0, 1 + v1.TP_DELAY))
+
+                if engineENABLED then
+                    local waitForChild8 = replicatedStorage:WaitForChild("Train", 10)
+
+                    if waitForChild8 then
+                        waitForChild8:FireServer()
+                    end
+            end
+
+        break
+    end
+end
+end
+
+if not v2 and engineENABLED then
+    if v1.AUTO_SKILLS then
+        local v24 = false
+
+        for j = 1, 4 do
+            if not engineENABLED or v2 then
+                break
+            else
+                local v25 = (v21 + j - 2) % 4 + 1
+
+                if v20[v25]() then
+                    virtualInputManager:SendKeyEvent(true, v19[v25], false, game)
+                    task.wait(0.05)
+                    virtualInputManager:SendKeyEvent(false, v19[v25], false, game)
+                    v21 = v25 % 4 + 1
+                    v24 = true
+                    task.wait(v1.SKILL_DELAY)
+                    break
+                end
+        end
+end
+
+if not v24 then
+    task.wait(0.2)
+end
+end
+
+if not v2 and engineENABLED and v1.AUTO_M1 then
+    virtualInputManager:SendMouseButtonEvent(0, 0, 0, true, game, 0)
+    task.wait(v1.M1_HOLD_DURATION)
+    virtualInputManager:SendMouseButtonEvent(0, 0, 0, false, game, 0)
+end
+
+task.wait(v1.M1_CLICK_DELAY)
+end
+end
+end)
+end
+
+task.spawn(function()
+    if #players:GetPlayers() > 1 then
+        return
+    end
+
+if getgenv()._ABA_Currently_In_PS then
+    return
+end
+
+f1(v1.PRIVATE_SERVER_DELAY)
+
+if not engineENABLED then
+    return
+else
+    getgenv()._ABA_Currently_In_PS = true
+    local waitForChild9 = replicatedStorage:WaitForChild("PS", 10)
+
+    if waitForChild9 and v1.PRIVATE_SERVER ~= ""
+    and v1.PRIVATE_SERVER ~= "Enter PS Code (Optional)" then
+    waitForChild9:FireServer("join", v1.PRIVATE_SERVER)
+end
+
+return
+end
+end)
+
+return
+end
+end
+end)
+else
+    print("🔵 ALT detected and active: " .. localPlayer.Name)
+
+    task.spawn(function()
+        pcall(function()
+            if getconnections then
+                for key, value in pairs(getconnections(localPlayer.Idled)) do
+                    local v26 = value
+                    pcall(function() v26:Disable() end)
+                    pcall(function() v26:Disconnect() end)
+                end
+        end
+
+    local v27 = getgenv and getgenv() or _G
+
+    if v27._AIO_AntiAfkConnection then
+        pcall(function() v27._AIO_AntiAfkConnection:Disconnect() end)
+    end
+
+v27._AIO_AntiAfkConnection = localPlayer.Idled:Connect(function()
+    local virtualInputManager2 = Instance.new("VirtualInputManager")
+    virtualInputManager2:SendMouseButtonEvent(0, 0, 0, true, game, 0)
+    virtualInputManager2:SendMouseButtonEvent(0, 0, 0, false, game, 0)
+    virtualInputManager2:Destroy()
+end)
+end)
+end)
+
+function f4(p2)
+    return p2 and p2.Character and p2.Character:FindFirstChild("HumanoidRootPart")
+end
+
+task.spawn(function()
+    while engineENABLED do
+        local findFirstChild = players:FindFirstChild(v1.MAIN_USERNAME)
+
+        if findFirstChild and findFirstChild ~= localPlayer then
+            local v28 = f4(localPlayer)
+            local v29 = f4(findFirstChild)
+
+            if v28 and v29 then
+                v28.CFrame = v29.CFrame * CFrame.new(v1.ALT_TP_OFFSET)
+                v28.AssemblyLinearVelocity = Vector3.zero
+            end
+    end
+
+f1(v1.ALT_TP_INTERVAL)
+end
+end)
+end
+end
+
+function f2(p3)
+    local v30 = tonumber(p3)
+
+    if v30 then
+        return "Q" .. tostring(v30)
+    end
+
+return tostring(p3)
+end
+
+local v31, v32 = pcall(function()
+    return loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+end)
+
+local window, toggle, f5
+
+if not v31 or not v32 then
+    warn("⚠ Failed to load WindUI! Running script without GUI interface.")
+
+    if v1.ENGINE_ENABLED then
+        engineENABLED = true
+        task.spawn(f3)
+    end
+
+return
+else
+    window = v32:CreateWindow({
+    Title = "ABA Auto Quest Farm", Icon = "swords", Author = "Standalone", Folder = "ABAQuestFarm", Size = UDim2.fromOffset(580, 460), Transparent = true, Theme = "Dark", SideBarWidth = 160, })
+
+    local mainSetupTab = window:Tab({ Title = "Main Setup", Icon = "home" })
+    local combatSettingsTab = window:Tab({ Title = "Combat Settings", Icon = "sword" })
+
+    mainSetupTab:Input({
+    Title = "Main Username", Desc = "Enter the exact username of your Main account", Value = v1.MAIN_USERNAME, Placeholder = "Username...", Callback = function(value2) v1.MAIN_USERNAME = value2 end, })
+
+    mainSetupTab:Input({
+    Title = "Quest Slot Number", Desc = "Target quest slot number (1 to 6)", Value = tostring(v1.SELECTED_QUEST_SLOT), Placeholder = "4", Callback = function(value3)
+        local v33 = tonumber(value3)
+
+        if v33 then
+            v1.SELECTED_QUEST_SLOT = v33
+        end
+end, })
+
+mainSetupTab:Toggle({
+Title = "Auto Refresh Quests", Desc = "Enable instant quest refresh glitch", Value = v1.AUTO_REFRESH_QUESTS, Callback = function(value4) v1.AUTO_REFRESH_QUESTS = value4 end, })
+
+mainSetupTab:Input({
+Title = "Glitch Quest Slot 1 Number", Desc = "First quest slot number for glitching (e.g. 1)", Value = tostring(v1.GLITCH_QUEST_1), Placeholder = "1", Callback = function(value5)
+    local v34 = tonumber(value5)
+
+    if v34 then
+        v1.GLITCH_QUEST_1 = v34
+    end
+end, })
+
+mainSetupTab:Input({
+Title = "Glitch Quest Slot 2 Number", Desc = "Second quest slot number for glitching (e.g. 2)", Value = tostring(v1.GLITCH_QUEST_2), Placeholder = "2", Callback = function(value6)
+    local v35 = tonumber(value6)
+
+    if v35 then
+        v1.GLITCH_QUEST_2 = v35
+    end
+end, })
+
+mainSetupTab:Input({
+Title = "Private Server Code", Desc = "Optional private server code to join automatically", Value = v1.PRIVATE_SERVER, Placeholder = "Code here...", Callback = function(value7) v1.PRIVATE_SERVER = value7 end, })
+
+toggle = nil
+
+toggle = mainSetupTab:Toggle({
+Title = "Start / Stop Engine", Desc = "Unified toggle to start and stop the farming engine", Value = v1.ENGINE_ENABLED, Callback = function(value8)
+    v1.ENGINE_ENABLED = value8
+    engineENABLED = value8
+
+    if value8 then
+        print("🚀 Farming Engine STARTED via UI toggle.")
+        task.spawn(f3)
+    else
+        print("🛑 Farming Engine STOPPED via UI toggle.")
+    end
+end, })
+
+mainSetupTab:Toggle({
+Title = "Auto Hide UI on Start", Desc = "Hides UI automatically when the script executes", Value = v1.AUTO_HIDE_UI, Callback = function(value9) v1.AUTO_HIDE_UI = value9 end, })
+
+mainSetupTab:Keybind({
+Title = "Menu Toggle Key", Desc = "Key to open or close the UI menu", Value = v1.TOGGLE_UI_KEY, Callback = function(value10)
+    local name = tostring(value10)
+
+    if typeof(value10) == "EnumItem" then
+        name = value10.Name
+    end
+
+v1.TOGGLE_UI_KEY = name
+end, })
+
+mainSetupTab:Keybind({
+Title = "Engine Start/Stop Key", Desc = "Key to start or stop the farming engine", Value = v1.TOGGLE_ENGINE_KEY, Callback = function(value11)
+    local name2 = tostring(value11)
+
+    if typeof(value11) == "EnumItem" then
+        name2 = value11.Name
+    end
+
+v1.TOGGLE_ENGINE_KEY = name2
+end, })
+
+combatSettingsTab:Toggle({
+Title = "Auto M1 Attacks", Desc = "Enable auto attacking", Value = v1.AUTO_M1, Callback = function(value12) v1.AUTO_M1 = value12 end, })
+
+combatSettingsTab:Toggle({
+Title = "Auto Skills", Desc = "Enable automatic skill spamming", Value = v1.AUTO_SKILLS, Callback = function(value13) v1.AUTO_SKILLS = value13 end, })
+
+combatSettingsTab:Toggle({
+Title = "Use Skill 1", Value = v1.SKILL_1, Callback = function(value14) v1.SKILL_1 = value14 end, })
+
+combatSettingsTab:Toggle({
+Title = "Use Skill 2", Value = v1.SKILL_2, Callback = function(value15) v1.SKILL_2 = value15 end, })
+
+combatSettingsTab:Toggle({
+Title = "Use Skill 3", Value = v1.SKILL_3, Callback = function(value16) v1.SKILL_3 = value16 end, })
+
+combatSettingsTab:Toggle({
+Title = "Use Skill 4", Value = v1.SKILL_4, Callback = function(value17) v1.SKILL_4 = value17 end, })
+
+function f5()
+    if not window then
+        return
+    elseif type(window.Toggle) == "function" then
+        pcall(function() window:Toggle() end)
+        return
+    else
+        local v36 = gethui and gethui() or coreGui
+        or localPlayer:FindFirstChildOfClass("PlayerGui")
+
+        if v36 then
+            for index, value18 in ipairs(v36:GetChildren()) do
+                if value18:IsA("ScreenGui")
+                and (value18.Name:find("WindUI") or value18.Name == "ABAQuestFarm") then
+                value18.Enabled = not value18.Enabled
+            end
+    end
+end
+
+return
+end
+end
+
+userInputService.InputBegan:Connect(function(input, p4)
+    if p4 then
+        return
+    else
+        local function f6(p5)
+            if not p5 then
+                return false
+            end
+
+        if input.KeyCode ~= Enum.KeyCode.Unknown and input.KeyCode.Name == p5 then
+            return true
+        end
+
+    return false
+end
+
+if f6(v1.TOGGLE_ENGINE_KEY) then
+    v1.ENGINE_ENABLED = not v1.ENGINE_ENABLED
+    engineENABLED = v1.ENGINE_ENABLED
+
+    if toggle and type(toggle.Set) == "function" then
+        toggle:Set(v1.ENGINE_ENABLED)
+    end
+
+if engineENABLED then
+    print("🟢 Farming Engine STARTED via hotkey [" .. tostring(v1.TOGGLE_ENGINE_KEY) .. "]")
+
+    task.spawn(f3)
+else
+    print("🔴 Farming Engine STOPPED via hotkey [" .. tostring(v1.TOGGLE_ENGINE_KEY) .. "]")
+end
+elseif f6(v1.TOGGLE_UI_KEY) then
+    f5()
+    print("👁 UI Visibility toggled via hotkey [" .. tostring(v1.TOGGLE_UI_KEY) .. "]")
+end
+
+return
+end
+end)
+
+if v1.AUTO_HIDE_UI then
+    task.spawn(function()
+        task.wait(0.6)
+        f5()
+        print("👁 UI automatically hidden on launch.")
+    end)
+end
+
+if v1.ENGINE_ENABLED then
+    engineENABLED = true
+    task.spawn(f3)
+end
+
+return
+end

@@ -1,0 +1,128 @@
+```
+-- This file was Deobfuscated & Cleaned using SigmaBot V4 | .gg/Zame2JAGDr
+
+local players = game:GetService("Players")
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local virtualInputManager = game:GetService("VirtualInputManager")
+local httpService = game:GetService("HttpService")
+local userInputService = game:GetService("UserInputService")
+local coreGui = game:GetService("CoreGui")
+
+while true do
+    task.wait()
+
+    if players.LocalPlayer then
+        break
+    end
+end
+
+local localPlayer = players.LocalPlayer
+
+local env = getgenv and getgenv() or _G
+
+local v1 = {
+MAIN_USERNAME = env.ABA_MAIN_USERNAME or "", SELECTED_QUEST_SLOT = 4, AUTO_REFRESH_QUESTS = true, GLITCH_QUEST_1 = 1, GLITCH_QUEST_2 = 2, REQUIRED_PLAYERS = 2, TP_DELAY = 3, PRIVATE_SERVER = env.ABA_PRIVATE_SERVER or "", PRIVATE_SERVER_DELAY = 3, M1_CLICK_DELAY = 0.2, M1_HOLD_DURATION = 0.05, ALT_TP_INTERVAL = 0.5, ALT_TP_OFFSET = Vector3.new(0, 0, -3), AUTO_SKILLS = false, SKILL_1 = true, SKILL_2 = true, SKILL_3 = true, SKILL_4 = true, SKILL_DELAY = 0.5, AUTO_M1 = true, ENGINE_ENABLED = env.ABA_AUTO_START == true, AUTO_HIDE_UI = true, TOGGLE_UI_KEY = "L", TOGGLE_ENGINE_KEY = "R",
+SCRIPT_URL = env.ABA_SCRIPT_URL or "", AUTO_REEXEC_TELEPORT = true, }
+
+local engineENABLED = v1.ENGINE_ENABLED
+local engineBooted = false
+
+-- Queue this script before every teleport so the farm continues automatically.
+local function queueSelfOnTeleport()
+    if not v1.AUTO_REEXEC_TELEPORT or not engineENABLED then
+        return
+    end
+
+    local queueFn = queue_on_teleport
+        or (syn and syn.queue_on_teleport)
+        or (fluxus and fluxus.queue_on_teleport)
+
+    if type(queueFn) ~= "function" then
+        warn("⚠ queue_on_teleport is not supported by this executor; auto-resume after teleport cannot work.")
+        return
+    end
+
+    if not v1.SCRIPT_URL or v1.SCRIPT_URL == "" then
+        warn("⚠ Set ABA_SCRIPT_URL / SCRIPT_URL to the RAW URL of this fixed script for infinite teleport looping.")
+        return
+    end
+
+    env.ABA_AUTO_START = true
+    env.ABA_MAIN_USERNAME = v1.MAIN_USERNAME
+    env.ABA_PRIVATE_SERVER = v1.PRIVATE_SERVER
+    env.ABA_SCRIPT_URL = v1.SCRIPT_URL
+
+    local loader = string.format([[
+repeat task.wait() until game:IsLoaded()
+getgenv().ABA_AUTO_START = true
+getgenv().ABA_MAIN_USERNAME = %q
+getgenv().ABA_PRIVATE_SERVER = %q
+getgenv().ABA_SCRIPT_URL = %q
+loadstring(game:HttpGet(getgenv().ABA_SCRIPT_URL))()
+]], v1.MAIN_USERNAME, v1.PRIVATE_SERVER, v1.SCRIPT_URL)
+
+    pcall(queueFn, loader)
+end
+
+local function f1(p1)
+    local total = 0
+
+    while total < p1 and engineENABLED do
+        task.wait(0.1)
+        total = total + 0.1
+    end
+end
+
+local f2
+
+local function f3()
+    if v1.MAIN_USERNAME == "" or v1.MAIN_USERNAME == "EnterMainUsernameHere" then
+        warn("⚠ Auto Farm aborted: Please set your MAIN_USERNAME in the UI!")
+        return
+    end
+
+local f4
+
+if string.lower(localPlayer.Name) == string.lower(v1.MAIN_USERNAME) then
+    print("🟢 MAIN account detected and active: " .. localPlayer.Name)
+
+    task.spawn(function()
+        if not game:IsLoaded() then
+            game.Loaded:Wait()
+        end
+
+    local v2, v3, v4, character
+
+    if not engineENABLED then
+        return
+    else
+        local waitForChild = replicatedStorage:WaitForChild("QuestStuff", 999)
+        local waitForChild2 = localPlayer:WaitForChild("ReplicatedStats", 10)
+
+        local waitForChild3 = waitForChild2
+        waitForChild3 = waitForChild2 and waitForChild2:WaitForChild("DailyQuest", 10)
+
+        local v5 = not waitForChild
+        local v6 = waitForChild3
+
+        if v5 or not v6 then
+            return
+        else
+            local v7 = false
+            v2 = false
+            v3 = "Kills"
+            v4 = 3
+            character = ""
+            local v8 = f2(v1.SELECTED_QUEST_SLOT)
+            local v9 = f2(v1.GLITCH_QUEST_1)
+            local v10 = f2(v1.GLITCH_QUEST_2)
+            local count = 0
+
+            while not v7 and engineENABLED and count < 5 do
+                count = count + 1
+
+                if v1.AUTO_REFRESH_QUESTS and count == 1 then
+                    for i = 1, 4 do
+                        if not engineENABLED then
+                            return
+                        end
